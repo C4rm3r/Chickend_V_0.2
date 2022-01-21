@@ -21,6 +21,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -150,6 +151,9 @@ public class PlayLevelActivity extends AppCompatActivity implements ChickenListe
     // set the background, animation and other variables and start launching balloons according to lvl
     private void startLevel()
     {
+        TextView levelTextView = (TextView)findViewById(R.id.TextView_LevelNumber);
+        levelTextView.setText(AppUtils.GetResourceStringByStringName("textview_level_number_text", this) + this.m_Level.getLevelNumber() + "");
+
         RelativeLayout layout = (RelativeLayout)findViewById(R.id.PlayLevelActivity);
         layout.setBackgroundResource(this.m_Level.getTheme());
         layout.invalidate();

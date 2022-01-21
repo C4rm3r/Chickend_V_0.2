@@ -33,15 +33,7 @@ public class Level implements Serializable {
         int currentChickenTypeIndex;
         String currentChickenType;
 
-        switch (this.m_CurrentLogicLevel.getLevelNumber())
-        {
-            case 1:
-            case 2:
-            case 3:
-                break;
-        }
-
-        if (1 <= this.m_CurrentLogicLevel.getLevelNumber() && this.m_CurrentLogicLevel.getLevelNumber() < 3)
+        if (1 <= this.m_CurrentLogicLevel.getLevelNumber() && this.m_CurrentLogicLevel.getLevelNumber() <= 3)
         {
             set = new String[]{"Chick"};
         }
@@ -57,12 +49,12 @@ public class Level implements Serializable {
         {
             set = new String[]{"Chick", "RegularChicken", "MotherChicken", "CrazyChicken"};
         }
-        else if (12 < this.m_CurrentLogicLevel.getLevelNumber())
+        else if (13 <= this.m_CurrentLogicLevel.getLevelNumber())
         {
             set = new String[]{"Chick", "RegularChicken", "MotherChicken", "CrazyChicken", "CovidChicken"};
         }
 
-        this.chickens = new Chicken[2]; // this.getLevelNumber()*10 + 20];
+        this.chickens = new Chicken[(this.getLevelNumber() * randomGenerator.nextInt(10)) + randomGenerator.nextInt(10)];
 
         for (int i = 0; i <  this.chickens.length; i++)
         {

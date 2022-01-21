@@ -4,4 +4,5 @@
     <string name="restart_game_button_text">start the game again !</string>
     <string name="messagebox_continue_playing_text">Take me to the next level !</string>
     <string name="messagebox_stop_playing_text">I prefer to leave</string>
+    <string name="textview_level_number_text">Level:</string>
 </resources>

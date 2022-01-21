@@ -84,30 +84,35 @@ public class Game implements IGame {
                 // code...
 
                 int currentTheme = 0;
+                int currentLevelNumber = 0;
 
                 // Generate the levels of the game
                 for (int i = 0; i < 20; i++)
                 {
-                    switch ((i / 5) + 1)
+                    currentLevelNumber = (i + 1);
+
+                    if (1 <= currentLevelNumber && currentLevelNumber <= 3)
                     {
-                        case 1:
-                            currentTheme = R.drawable.background___ancient_egypt;
-                            break;
-                        case 2:
-                            currentTheme = R.drawable.background___beach_of_mosh;
-                            break;
-                        case 3:
-                            currentTheme = R.drawable.background___route_66;
-                            break;
-                        case 4:
-                            currentTheme = R.drawable.background___life_of_xp;
-                            break;
-                        case 5:
-                            currentTheme = R.drawable.background___brazil_tour;
-                            break;
+                        currentTheme = R.drawable.background___ancient_egypt;
+                    }
+                    else if (4 <= currentLevelNumber && currentLevelNumber <= 6)
+                    {
+                        currentTheme = R.drawable.background___beach_of_mosh;
+                    }
+                    else if (7 <= currentLevelNumber && currentLevelNumber <= 9)
+                    {
+                        currentTheme = R.drawable.background___route_66;
+                    }
+                    else if (10 <= currentLevelNumber && currentLevelNumber <= 12)
+                    {
+                        currentTheme = R.drawable.background___life_of_xp;
+                    }
+                    else if (13 <= currentLevelNumber)
+                    {
+                        currentTheme = R.drawable.background___brazil_tour;
                     }
 
-                    level = new Level(i + 1, true, 5, currentTheme);
+                    level = new Level(currentLevelNumber, true, 5, currentTheme);
                     this.levels.add(level);
                 }
 
