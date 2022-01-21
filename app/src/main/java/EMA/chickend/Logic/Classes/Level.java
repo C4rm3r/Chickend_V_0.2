@@ -1,44 +1,29 @@
 package EMA.chickend.Logic.Classes;
 
 import android.content.Context;
+import android.graphics.Typeface;
+import android.view.ContextThemeWrapper;
+import android.widget.ImageView;
+import android.widget.RatingBar;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
 import EMA.chickend.GUI.AllLevelsOverviewForm;
-import EMA.chickend.Logic.Classes.Matan.PlayLevelActivity;
-import EMA.chickend.Logic.Interfaces.ILevel;
-import EMA.chickend.MainActivity;
 import EMA.chickend.R;
 
-/**
- * The level class represents a stage in the game
- * Each stage has different difficulty levels.
- */
-public class Level implements ILevel, Serializable {
-    private int levelNumber;
-    private boolean isLocked;
-    private int numberOfLives;
-    private Chicken[] chickens;
-    private int theme;
-    private int lockPhotoId;
+public class Level implements Serializable {
 
-    /**
-     * public Level()
-     *     Purpose: c'tor of the level class
-     * @param levelNumber this object represents the level number.
-     * @param isLocked
-     * @param numberOfLives this object represents the number of lives the player have in the level.
-     * @param theme
-     */
-    public Level(int levelNumber, boolean isLocked, int numberOfLives, int theme) {
-        this.levelNumber = levelNumber;
-        this.setIsLocked(isLocked);
-        this.numberOfLives = numberOfLives;
-        this.chickens = chickens;
-        this.theme = theme;
+    private LogicLevel m_CurrentLogicLevel = null;
+    private Chicken[] chickens;
+    private RelativeLayout m_VisualComponentOfCurrentLevel = null;
+
+    public Level(int levelNumber, boolean isLocked, int numberOfLives, int theme)
+    {
+        this.m_CurrentLogicLevel = new LogicLevel(levelNumber, isLocked, numberOfLives, theme);
     }
 
     public List<Chicken> generateChickens(Context i_Context)
@@ -48,21 +33,33 @@ public class Level implements ILevel, Serializable {
         int currentChickenTypeIndex;
         String currentChickenType;
 
-        if (this.getLevelNumber() < 5)
+        switch (this.m_CurrentLogicLevel.getLevelNumber())
+        {
+            case 1:
+            case 2:
+            case 3:
+                break;
+        }
+
+        if (1 <= this.m_CurrentLogicLevel.getLevelNumber() && this.m_CurrentLogicLevel.getLevelNumber() < 3)
         {
             set = new String[]{"Chick"};
         }
-        else if (5 < this.getLevelNumber() && this.getLevelNumber() < 10)
+        else if (4 <= this.m_CurrentLogicLevel.getLevelNumber() && this.m_CurrentLogicLevel.getLevelNumber() <= 6)
         {
             set = new String[]{"Chick", "RegularChicken"};
         }
-        else if (10 < this.getLevelNumber() && this.getLevelNumber() < 15)
+        else if (7 <= this.m_CurrentLogicLevel.getLevelNumber() && this.m_CurrentLogicLevel.getLevelNumber() <= 9)
         {
             set = new String[]{"Chick", "RegularChicken", "MotherChicken"};
         }
-        else if (15 < this.getLevelNumber() && this.getLevelNumber() < 20)
+        else if (10 <= this.m_CurrentLogicLevel.getLevelNumber() && this.m_CurrentLogicLevel.getLevelNumber() <= 12)
         {
             set = new String[]{"Chick", "RegularChicken", "MotherChicken", "CrazyChicken"};
+        }
+        else if (12 < this.m_CurrentLogicLevel.getLevelNumber())
+        {
+            set = new String[]{"Chick", "RegularChicken", "MotherChicken", "CrazyChicken", "CovidChicken"};
         }
 
         this.chickens = new Chicken[2]; // this.getLevelNumber()*10 + 20];
@@ -99,73 +96,158 @@ public class Level implements ILevel, Serializable {
         return null;
     }
 
-    public int getNumberOfLives() {
-        return numberOfLives;
-    }
-
-    public void setNumberOfLives(int numberOfLives) {
-        this.numberOfLives = numberOfLives;
-    }
-
     public int getLevelNumber() {
-        return levelNumber;
-    }
-
-    public void setLevelNumber(int levelNumber) {
-        this.levelNumber = levelNumber;
+        return this.m_CurrentLogicLevel.getLevelNumber();
     }
 
     public Chicken[] getChickens() {
         return chickens;
     }
 
+    public boolean isLocked()
+    {
+        return this.m_CurrentLogicLevel.isLocked();
+    }
+
+    // TODO: handle lastly..
     public void setIsLocked(boolean newLevelLockState)
     {
-        this.isLocked = newLevelLockState;
+        this.m_CurrentLogicLevel.setIsLocked(newLevelLockState);
 
-        if (this.isLocked == true)
+        if (this.m_VisualComponentOfCurrentLevel != null)
         {
-            this.lockPhotoId = R.drawable.ic_baseline_lock_24;
-        }
-        else
-        {
-            this.lockPhotoId = R.drawable.ic_baseline_unlock_24;
+            ((ImageView) this.m_VisualComponentOfCurrentLevel.getChildAt(1)).setImageResource(this.getLevelLockImage());
+            this.setImageAlpha();
+            this.m_VisualComponentOfCurrentLevel.invalidate();
         }
     }
 
-    public boolean isLocked()
+    public void setNumberOfLives(int numberOfLives)
     {
-        return this.isLocked;
+        this.m_CurrentLogicLevel.setNumberOfLives(numberOfLives);
+
+        if (this.m_VisualComponentOfCurrentLevel != null)
+        {
+            ((RatingBar) this.m_VisualComponentOfCurrentLevel.getChildAt(2)).setNumStars(numberOfLives);
+            this.m_VisualComponentOfCurrentLevel.invalidate();
+        }
+    }
+
+    public void setImageAlpha()
+    {
+        // If the level is open
+        if (this.m_CurrentLogicLevel.isLocked() == false)
+        {
+            ((ImageView)this.m_VisualComponentOfCurrentLevel.getChildAt(0)).setImageAlpha(230);
+        }
     }
 
     public int getLevelLockImage()
     {
-        return this.lockPhotoId;
+        if (this.m_CurrentLogicLevel.isLocked() == true)
+        {
+            return R.drawable.ic_baseline_lock_24;
+        }
+        else
+        {
+            return R.drawable.ic_baseline_unlock_24;
+        }
     }
 
     public int getTheme()
     {
-        return this.theme;
+        return this.m_CurrentLogicLevel.getTheme();
     }
 
-    public void setTheme(int newTheme)
+    public RelativeLayout getVisualComponentOfLevelObject(Context i_Context)
     {
-        this.theme = newTheme;
+        // Dynamically load the suitable id of the current RelativeLayout
+        int currentRelativeLayoutId = AppUtils.getIdValueByIdStringName(String.format("id_of_relativelayout_of_level_%d", this.getLevelNumber()), i_Context);
+
+        // Dynamically load the suitable id of the current ImageView of the theme iamge
+        int currentThemeImageViewId = AppUtils.getIdValueByIdStringName(String.format("id_of_imageview_of_level_%d", this.getLevelNumber()), i_Context);
+
+        // Dynamically load the suitable id of the current ImageView of the lock image
+        int currentLockerImageViewId = AppUtils.getIdValueByIdStringName(String.format("id_of_lockimageview_of_level_%d", this.getLevelNumber()), i_Context);
+
+        // Dynamically load the suitable id of the current TextView
+        int currentTextViewId = AppUtils.getIdValueByIdStringName(String.format("id_of_textview_of_level_%d", this.getLevelNumber()), i_Context);
+
+        // Dynamically load the suitable id of the current RatingBar
+        int currentRatingBarId = AppUtils.getIdValueByIdStringName(String.format("id_of_ratingbar_of_level_%d", this.getLevelNumber()), i_Context);
+
+        /*relative layout*/
+        this.m_VisualComponentOfCurrentLevel = new RelativeLayout(i_Context);
+        this.m_VisualComponentOfCurrentLevel.setId(currentRelativeLayoutId);
+
+        /* image background */
+        ImageView imageBackground = new ImageView(i_Context);
+        imageBackground.setId(currentThemeImageViewId);
+        int dp300 = AppUtils.ConvertPixelsToDPs(i_Context.getResources(),300);
+        RelativeLayout.LayoutParams imageBackgroundParams = new RelativeLayout.LayoutParams(dp300,dp300);
+        imageBackground.setLayoutParams(imageBackgroundParams);
+        imageBackground.setImageResource(this.getTheme());
+        // set the pictures to fit the layout dimensions
+        imageBackground.setScaleType(ImageView.ScaleType.FIT_XY);
+        imageBackground.setImageAlpha(100);
+
+        /* rating bar */
+        RatingBar ratingBar = new RatingBar(new ContextThemeWrapper(i_Context,R.style.ratingBar),null ,R.style.ratingBar);
+        ratingBar.setId(currentRatingBarId);
+        RelativeLayout.LayoutParams ratingBarParams = new RelativeLayout.LayoutParams(
+                RelativeLayout.LayoutParams.WRAP_CONTENT,
+                RelativeLayout.LayoutParams.WRAP_CONTENT);
+        ratingBarParams.addRule(RelativeLayout.BELOW,currentThemeImageViewId);
+        ratingBarParams.addRule(RelativeLayout.CENTER_HORIZONTAL);
+        int dp8 = AppUtils.ConvertPixelsToDPs(i_Context.getResources(), 8);
+        ratingBarParams.setMargins(0,dp8,0,0);
+        ratingBar.setLayoutParams(ratingBarParams);
+        ratingBar.setNumStars(5);
+
+        // TODO: change this to the real number of stars
+        ratingBar.setRating(5);
+
+        /*text view level number*/
+        TextView textView = new TextView(i_Context);
+        RelativeLayout.LayoutParams textViewParams = new RelativeLayout.LayoutParams(
+                RelativeLayout.LayoutParams.WRAP_CONTENT,
+                RelativeLayout.LayoutParams.WRAP_CONTENT);
+        textViewParams.addRule(RelativeLayout.CENTER_HORIZONTAL);
+        textViewParams.addRule(RelativeLayout.CENTER_VERTICAL);
+        textView.setLayoutParams(textViewParams);
+        textView.setId(currentTextViewId);
+        textView.setText(this.getLevelNumber() + "");
+        textView.setTypeface(Typeface.SANS_SERIF, Typeface.BOLD);
+        int dp10 = AppUtils.ConvertDPsToPixels(i_Context.getResources(),15);
+        textView.setTextSize(dp10);
+
+
+        /*image lock*/
+        ImageView imageLock = new ImageView(i_Context);
+        imageLock.setId(currentLockerImageViewId);
+        imageLock.setImageResource(this.getLevelLockImage());
+        int dp80 = AppUtils.ConvertPixelsToDPs(i_Context.getResources(),80);
+        RelativeLayout.LayoutParams imageLockParams = new RelativeLayout.LayoutParams(dp80,dp80);
+        imageLockParams.addRule(RelativeLayout.ALIGN_TOP);
+        imageLockParams.addRule(RelativeLayout.ALIGN_RIGHT,currentThemeImageViewId);
+        imageLock.setLayoutParams(imageLockParams);
+        imageLock.setRotation(340);
+
+        this.m_VisualComponentOfCurrentLevel.addView(imageBackground);
+        this.m_VisualComponentOfCurrentLevel.addView(imageLock);
+        this.m_VisualComponentOfCurrentLevel.addView(ratingBar);
+        this.m_VisualComponentOfCurrentLevel.addView(textView);
+
+        return this.m_VisualComponentOfCurrentLevel;
     }
 
-    /**
-     * This method start the level the user selected.
-     */
-    @Override
-    public void PlayGame() {
-
+    public RelativeLayout getVisualComponent()
+    {
+        return this.m_VisualComponentOfCurrentLevel;
     }
 
-    /**
-     * This method return to the main menu of the game.
-     */
-    @Override
-    public void ExitGame() {
-
+    public LogicLevel getLogicLevel()
+    {
+        return this.m_CurrentLogicLevel;
     }
 }

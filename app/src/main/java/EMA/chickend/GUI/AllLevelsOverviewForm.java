@@ -25,7 +25,6 @@ public class AllLevelsOverviewForm extends Activity
     private RelativeLayout              m_RelativeLayout_MainLayout = null;
 
     private List<Level>                 m_AllLevels                 = null;
-    private RelativeLayout[]            m_AllLevelsVisualComponents = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -35,13 +34,8 @@ public class AllLevelsOverviewForm extends Activity
 
         this.m_RelativeLayout_MainLayout = findViewById(R.id.RelativeLayout_MainLayout);
         this.m_AllLevels = Game.getInstance().getLevels();
-        this.m_AllLevelsVisualComponents = new RelativeLayout[this.m_AllLevels.size()];
 
         embedLevelsAsVisualComponents();
-    }
-
-    private void retrieveAllLevelsData()
-    {
     }
 
     private void embedLevelsAsVisualComponents()
@@ -63,35 +57,10 @@ public class AllLevelsOverviewForm extends Activity
             */
             currentLevel = this.m_AllLevels.get(currentIndex);
 
-            // Dynamically load the suitable id of the current RelativeLayout
-            relativeLayoutId = AppUtils.getIdValueByIdStringName(String.format("id_of_relativelayout_of_level_%d", currentIndex + 1), this);
-
-            // Dynamically load the suitable id of the current ImageView of the theme iamge
-            currentThemeImageViewId = AppUtils.getIdValueByIdStringName(String.format("id_of_imageview_of_level_%d", currentIndex + 1), this);
-
-            // Dynamically load the suitable id of the current ImageView of the lock image
-            currentLockImageViewId = AppUtils.getIdValueByIdStringName(String.format("id_of_lockimageview_of_level_%d", currentIndex + 1), this);
-
-            // Dynamically load the suitable id of the current TextView
-            currentTextViewId = AppUtils.getIdValueByIdStringName(String.format("id_of_textview_of_level_%d", currentIndex + 1), this);
-
-            // Dynamically load the suitable id of the current RatingBar
-            currentRatingBarId = AppUtils.getIdValueByIdStringName(String.format("id_of_ratingbar_of_level_%d", currentIndex + 1), this);
-
             layoutParams = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
             layoutParams.setMargins(20, 20, 20, 20);
 
-            visualComponentOfTheCurrentLevel = getVisualComponentOfLevelObject(
-                    currentLevel.getLevelNumber(),
-                    currentLevel.getTheme(),
-                    currentThemeImageViewId,
-                    currentRatingBarId,
-                    relativeLayoutId,
-                    currentLockImageViewId,
-                    currentLevel.getLevelLockImage(),
-                    currentTextViewId);
-
-            this.m_AllLevelsVisualComponents[currentIndex] = visualComponentOfTheCurrentLevel;
+            visualComponentOfTheCurrentLevel = currentLevel.getVisualComponentOfLevelObject(this);
 
             /*
             00  01  02
@@ -105,12 +74,12 @@ public class AllLevelsOverviewForm extends Activity
 
             if (currentIndex >= 3)
             {
-                layoutParams.addRule(RelativeLayout.BELOW, this.m_AllLevelsVisualComponents[currentIndex - 3].getId());
+                layoutParams.addRule(RelativeLayout.BELOW, Game.getInstance().getLevels().get(currentIndex - 3).getVisualComponent().getId());
             }
 
             if (currentIndex % 3 != 0)
             {
-                layoutParams.addRule(RelativeLayout.RIGHT_OF, this.m_AllLevelsVisualComponents[currentIndex - 1].getId());
+                layoutParams.addRule(RelativeLayout.RIGHT_OF, Game.getInstance().getLevels().get(currentIndex - 1).getVisualComponent().getId());
             }
 
             /*
@@ -130,7 +99,7 @@ public class AllLevelsOverviewForm extends Activity
 
                     int levelNumber = Integer.valueOf(currentTextView.getText().toString());
                     int levelIndex = levelNumber - 1;
-                    Level currentLevelWhichShouldBePlayed = AllLevelsOverviewForm.this.m_AllLevels.get(levelIndex);
+                    Level currentLevelWhichShouldBePlayed = Game.getInstance().getLevels().get(levelIndex);
 
                     // If the current level is still locked
                     if (currentLevelWhichShouldBePlayed.isLocked() == true)
@@ -140,7 +109,7 @@ public class AllLevelsOverviewForm extends Activity
                     else
                     {
                         Intent intent = new Intent(AllLevelsOverviewForm.this, PlayLevelActivity.class);
-                        intent.putExtra("Level", currentLevelWhichShouldBePlayed);
+                        intent.putExtra("Level", levelNumber);
                         startActivity(intent);
                     }
                 }
@@ -148,6 +117,8 @@ public class AllLevelsOverviewForm extends Activity
 
             this.m_RelativeLayout_MainLayout.addView(visualComponentOfTheCurrentLevel, layoutParams);
         }
+
+        Game.getInstance().getLevels().get(0).setImageAlpha();
     }
 
     @Override
@@ -169,79 +140,5 @@ public class AllLevelsOverviewForm extends Activity
     public void updateLevelVisualComponent(int levelIndex)
     {
         // this.m_AllLevelsVisualComponents[levelIndex]
-    }
-
-    public RelativeLayout getVisualComponentOfLevelObject(int levelNumber, int backgorundImageId,
-                                                          int currentThemeImageViewId,
-                                                          int currentRatingBarId, int currentRelativeLayoutId,
-                                                          int currentLockerImageViewId,
-                                                          int lockerImageId,
-                                                          int currentLevelNumberTextViewId){
-        /**
-         * @param: level
-         *
-         * */
-        /*relative layout*/
-        RelativeLayout levelContainer = new RelativeLayout(AllLevelsOverviewForm.this);
-        levelContainer.setId(currentRelativeLayoutId);
-
-        /* image background */
-        ImageView imageBackground = new ImageView(AllLevelsOverviewForm.this);
-        imageBackground.setId(currentThemeImageViewId);
-        int dp300 = AppUtils.ConvertPixelsToDPs(this.getResources(),300);
-        RelativeLayout.LayoutParams imageBackgroundParams = new RelativeLayout.LayoutParams(dp300,dp300);
-        imageBackground.setLayoutParams(imageBackgroundParams);
-        imageBackground.setImageResource(backgorundImageId);
-        // set the pictures to fit the layout dimensions
-        imageBackground.setScaleType(ImageView.ScaleType.FIT_XY);
-        imageBackground.setImageAlpha(160);
-
-        /* rating bar */
-        RatingBar ratingBar = new RatingBar(new ContextThemeWrapper(this,R.style.ratingBar),null ,R.style.ratingBar);
-        ratingBar.setId(currentRatingBarId);
-        RelativeLayout.LayoutParams ratingBarParams = new RelativeLayout.LayoutParams(
-                RelativeLayout.LayoutParams.WRAP_CONTENT,
-                RelativeLayout.LayoutParams.WRAP_CONTENT);
-        ratingBarParams.addRule(RelativeLayout.BELOW,currentThemeImageViewId);
-        ratingBarParams.addRule(RelativeLayout.CENTER_HORIZONTAL);
-        int dp8 = AppUtils.ConvertPixelsToDPs(this.getResources(), 8);
-        ratingBarParams.setMargins(0,dp8,0,0);
-        ratingBar.setLayoutParams(ratingBarParams);
-        ratingBar.setNumStars(5);
-
-        // TODO: change this to the real number of stars
-        ratingBar.setRating(5);
-
-        /*text view level number*/
-        TextView textView = new TextView(AllLevelsOverviewForm.this);
-        RelativeLayout.LayoutParams textViewParams = new RelativeLayout.LayoutParams(
-                RelativeLayout.LayoutParams.WRAP_CONTENT,
-                RelativeLayout.LayoutParams.WRAP_CONTENT);
-        textViewParams.addRule(RelativeLayout.CENTER_HORIZONTAL);
-        textViewParams.addRule(RelativeLayout.CENTER_VERTICAL);
-        textView.setLayoutParams(textViewParams);
-        textView.setId(currentLevelNumberTextViewId);
-        textView.setText(levelNumber+"");
-        int dp10 = AppUtils.ConvertDPsToPixels(this.getResources(),10);
-        textView.setTextSize(dp10);
-
-
-        /*image lock*/
-        ImageView imageLock = new ImageView(AllLevelsOverviewForm.this);
-        imageLock.setId(currentLockerImageViewId);
-        imageLock.setImageResource(lockerImageId);
-        int dp80 = AppUtils.ConvertPixelsToDPs(this.getResources(),80);
-        RelativeLayout.LayoutParams imageLockParams = new RelativeLayout.LayoutParams(dp80,dp80);
-        imageLockParams.addRule(RelativeLayout.ALIGN_TOP);
-        imageLockParams.addRule(RelativeLayout.ALIGN_RIGHT,currentThemeImageViewId);
-        imageLock.setLayoutParams(imageLockParams);
-        imageLock.setRotation(340);
-
-        levelContainer.addView(imageBackground);
-        levelContainer.addView(imageLock);
-        levelContainer.addView(ratingBar);
-        levelContainer.addView(textView);
-
-        return levelContainer;
     }
 }

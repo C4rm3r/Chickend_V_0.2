@@ -7,6 +7,8 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
+import android.graphics.drawable.Drawable;
+import android.media.Rating;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
@@ -17,6 +19,8 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.RatingBar;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -25,6 +29,7 @@ import java.util.List;
 import java.util.Random;
 
 import EMA.chickend.GUI.AllLevelsOverviewForm;
+import EMA.chickend.Logic.Classes.AppUtils;
 import EMA.chickend.Logic.Classes.Chicken;
 import EMA.chickend.Logic.Classes.Game;
 import EMA.chickend.Logic.Classes.Level;
@@ -84,9 +89,7 @@ public class PlayLevelActivity extends AppCompatActivity implements ChickenListe
         m_HeartImages.add((ImageView) findViewById(R.id.heart5));
 
         // Get the level from the bundle of activity's parameters
-
-        this.m_Level = (Level)getIntent().getSerializableExtra("Level");
-        // this.m_Level = (Level)savedInstanceState.getSerializable("Level");
+        this.m_Level = Game.getInstance().getLevels().get(getIntent().getIntExtra("Level", 0) - 1);
         this.m_Level.generateChickens(this);
 
         try {
@@ -112,7 +115,6 @@ public class PlayLevelActivity extends AppCompatActivity implements ChickenListe
         {
             Toast.makeText(this, exception.toString(), Toast.LENGTH_LONG).show();
         }
-
     }
 
     private void resetHearts()
@@ -123,7 +125,7 @@ public class PlayLevelActivity extends AppCompatActivity implements ChickenListe
         }
     }
 
-    //initialize the hearts for the game and start the level again.
+    // Initialize the hearts for the game and start the level again.
     private void startLevelAgain()
     {
         this.resetHearts();
@@ -148,12 +150,9 @@ public class PlayLevelActivity extends AppCompatActivity implements ChickenListe
     // set the background, animation and other variables and start launching balloons according to lvl
     private void startLevel()
     {
-        /*
-        if (this.dialog != null)
-        {
-            this.dialog.
-        }
-        */
+        RelativeLayout layout = (RelativeLayout)findViewById(R.id.PlayLevelActivity);
+        layout.setBackgroundResource(this.m_Level.getTheme());
+        layout.invalidate();
 
         this.resetHearts();
         chickensLaunched = 0;
@@ -183,6 +182,8 @@ public class PlayLevelActivity extends AppCompatActivity implements ChickenListe
             Yes - go to the next level
             No  - go to the AllLevelsOverviewForm
         */
+
+        this.m_Level.setNumberOfLives(this.NUMBER_OF_HEARTS - this.m_HeartUsed);
 
         // Unlock the next level - LOGICALLY && GRAPHICALLY
         Level nextLevel = Game.getInstance().getLevels().get(this.m_Level.getLevelNumber());
