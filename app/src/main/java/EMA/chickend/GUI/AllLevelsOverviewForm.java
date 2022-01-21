@@ -192,6 +192,8 @@ public class AllLevelsOverviewForm extends Activity
         RelativeLayout.LayoutParams imageBackgroundParams = new RelativeLayout.LayoutParams(dp300,dp300);
         imageBackground.setLayoutParams(imageBackgroundParams);
         imageBackground.setImageResource(backgorundImageId);
+        // set the pictures to fit the layout dimensions
+        imageBackground.setScaleType(ImageView.ScaleType.FIT_XY);
 
         /* rating bar */
         RatingBar ratingBar = new RatingBar(new ContextThemeWrapper(this,R.style.ratingBar),null ,R.style.ratingBar);
