@@ -194,6 +194,7 @@ public class AllLevelsOverviewForm extends Activity
         imageBackground.setImageResource(backgorundImageId);
         // set the pictures to fit the layout dimensions
         imageBackground.setScaleType(ImageView.ScaleType.FIT_XY);
+        imageBackground.setImageAlpha(160);
 
         /* rating bar */
         RatingBar ratingBar = new RatingBar(new ContextThemeWrapper(this,R.style.ratingBar),null ,R.style.ratingBar);
@@ -224,12 +225,13 @@ public class AllLevelsOverviewForm extends Activity
         int dp10 = AppUtils.ConvertDPsToPixels(this.getResources(),10);
         textView.setTextSize(dp10);
 
+
         /*image lock*/
         ImageView imageLock = new ImageView(AllLevelsOverviewForm.this);
         imageLock.setId(currentLockerImageViewId);
         imageLock.setImageResource(lockerImageId);
-        int dp30 = AppUtils.ConvertPixelsToDPs(this.getResources(),30);
-        RelativeLayout.LayoutParams imageLockParams = new RelativeLayout.LayoutParams(dp30,dp30);
+        int dp80 = AppUtils.ConvertPixelsToDPs(this.getResources(),80);
+        RelativeLayout.LayoutParams imageLockParams = new RelativeLayout.LayoutParams(dp80,dp80);
         imageLockParams.addRule(RelativeLayout.ALIGN_TOP);
         imageLockParams.addRule(RelativeLayout.ALIGN_RIGHT,currentThemeImageViewId);
         imageLock.setLayoutParams(imageLockParams);
