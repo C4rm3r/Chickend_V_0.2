@@ -88,6 +88,10 @@ public class Level implements Serializable {
             {
                 this.chickens[i] = new MotherChicken(i_Context);
             }
+            else if (currentChickenType.equals("CovidChicken"))
+            {
+                this.chickens[i] = new CovidChicken(i_Context);
+            }
         }
 
         return null;
