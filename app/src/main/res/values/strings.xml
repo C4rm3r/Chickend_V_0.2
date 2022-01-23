@@ -6,4 +6,6 @@
     <string name="messagebox_stop_playing_text">I prefer to leave</string>
     <string name="textview_level_number_text">Level:</string>
     <string name="start_app">Let\'s start!</string>
+    <string name="finish_game_button">Exit game</string>
+    <string name="finsh_game_message">Thank you for playing!</string>
 </resources>
