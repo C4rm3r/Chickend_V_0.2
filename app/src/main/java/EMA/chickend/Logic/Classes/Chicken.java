@@ -70,10 +70,27 @@ public abstract class Chicken extends androidx.appcompat.widget.AppCompatImageVi
     }
 
     @Override
-    public boolean onTouchEvent(MotionEvent event) {
+    public boolean onTouchEvent(MotionEvent event)
+    {
         if(event.getAction() == MotionEvent.ACTION_DOWN)
         {
+            this.m_ClicksToDeath--;
 
+            if (this.m_ClicksToDeath == 0)
+            {
+                if (!this.getKilled())
+                {
+                    this.getListener().killChicken(this, true);
+                    setKilled(true);
+                    this.getAnimator().cancel();
+                }
+                if(event.getAction() == MotionEvent.ACTION_UP)
+                {
+                    performClick();
+                }
+            }
+
+            /*
             if(m_ClicksToDeath > 0 )
             {
                 this.m_ClicksToDeath--;
@@ -91,6 +108,7 @@ public abstract class Chicken extends androidx.appcompat.widget.AppCompatImageVi
                     performClick();
                 }
             }
+            */
         }
 
         return super.onTouchEvent(event);

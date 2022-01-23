@@ -7,10 +7,13 @@ import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.io.Serializable;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
+import java.util.concurrent.ThreadLocalRandom;
 
 import EMA.chickend.GUI.AllLevelsOverviewForm;
 import EMA.chickend.R;
@@ -54,7 +57,9 @@ public class Level implements Serializable {
             set = new String[]{"Chick", "RegularChicken", "MotherChicken", "CrazyChicken", "CovidChicken"};
         }
 
-        this.chickens = new Chicken[(this.getLevelNumber() * randomGenerator.nextInt(10)) + randomGenerator.nextInt(10)];
+        Toast.makeText(i_Context, Arrays.toString(set), Toast.LENGTH_LONG).show();
+
+        this.chickens = new Chicken[5]; //ThreadLocalRandom.current().nextInt(30, 41)];
 
         for (int i = 0; i <  this.chickens.length; i++)
         {

@@ -108,7 +108,6 @@ public class PlayLevelActivity extends AppCompatActivity implements ChickenListe
                         // start the level
                         startLevel();
                     }
-
                 }
             });
         }
@@ -147,7 +146,6 @@ public class PlayLevelActivity extends AppCompatActivity implements ChickenListe
         super.onResume();
     }
 
-
     // set the background, animation and other variables and start launching balloons according to lvl
     private void startLevel()
     {
@@ -169,6 +167,11 @@ public class PlayLevelActivity extends AppCompatActivity implements ChickenListe
         m_ChickensKilled = 0;
         m_GoButton.clearAnimation();
         m_GoButton.setVisibility(View.INVISIBLE);
+    }
+
+    @Override
+    public void onBackPressed()
+    {
     }
 
     // finish/start lvl pause
@@ -228,8 +231,6 @@ public class PlayLevelActivity extends AppCompatActivity implements ChickenListe
         }, 500);
         */
     }
-
-
 
     /**
      * what will happen when a Chicken is pressed.
@@ -375,7 +376,6 @@ public class PlayLevelActivity extends AppCompatActivity implements ChickenListe
     // TODO: as being said above, this function should launch the new given chicken and not just new ordinary chicken...
     // add the chicken to the list and screen and then start attack.
     private void launchChickenAttack(int x, Chicken currentChickenToLaunch) {
-
         /*
         MatanChicken chicken = new MatanChicken(this, 150);
         // add the chicken to the array of chickens.
