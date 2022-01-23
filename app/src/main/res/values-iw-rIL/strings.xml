@@ -6,4 +6,5 @@
     <string name="messagebox_continue_playing_text">קח אותי לשלב הבא !</string>
     <string name="messagebox_stop_playing_text">מעדיף לצאת</string>
     <string name="textview_level_number_text">"שלב: "</string>
+    <string name="start_app">בואו נתחיל!</string>
 </resources>

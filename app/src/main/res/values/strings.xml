@@ -5,4 +5,5 @@
     <string name="messagebox_continue_playing_text">Take me to the next level !</string>
     <string name="messagebox_stop_playing_text">I prefer to leave</string>
     <string name="textview_level_number_text">Level:</string>
+    <string name="start_app">Let\'s start!</string>
 </resources>
