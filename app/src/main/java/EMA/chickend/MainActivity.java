@@ -9,6 +9,8 @@ import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -38,12 +40,12 @@ public class MainActivity extends AppCompatActivity {
         chick.getBackground().setAlpha(230);
         regularChicken.getBackground().setAlpha(230);
 
+        Button startButton = findViewById(R.id.mybutton);
+        Animation scale = AnimationUtils.loadAnimation(this, R.anim.scale);
+        startButton.startAnimation(scale);
 
-
-        Button btn = findViewById(R.id.mybutton);
-
-        btn.setAlpha(1);
-        btn.setOnClickListener(new View.OnClickListener() {
+        startButton.setAlpha(1);
+        startButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(MainActivity.this, AllLevelsOverviewForm.class));
