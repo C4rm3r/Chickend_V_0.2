@@ -6,6 +6,7 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.drawable.Drawable;
 import android.media.Rating;
@@ -34,6 +35,8 @@ import EMA.chickend.Logic.Classes.AppUtils;
 import EMA.chickend.Logic.Classes.Chicken;
 import EMA.chickend.Logic.Classes.Game;
 import EMA.chickend.Logic.Classes.Level;
+import EMA.chickend.Logic.Classes.finishGameForm;
+import EMA.chickend.MainActivity;
 import EMA.chickend.R;
 
 
@@ -41,6 +44,7 @@ public class PlayLevelActivity extends AppCompatActivity implements ChickenListe
     private static final int MIN_ANIMATION_DELAY = 500;
     private static final int MAX_ANIMATION_DELAY = 1500;
     private static final int NUMBER_OF_HEARTS = 5;
+    private static final int NUMBER_OF_LEVELS = 20;
     private static int m_ChickenPerLevel = 20;
     private int m_ScreenWidth, m_ScreenHeight, m_ChickensKilled, m_HeartUsed;
     // need to get the level in the ctor to know how many chickens to Launch
@@ -217,6 +221,11 @@ public class PlayLevelActivity extends AppCompatActivity implements ChickenListe
                 finish();
             }
         });
+
+        // Go to finish levels screen.
+        if(m_Level.getLevelNumber() == NUMBER_OF_LEVELS) {
+            startActivity(new Intent(this, finishGameForm.class));
+        }
 
         dialog.setCancelable(false);
         dialog.show();

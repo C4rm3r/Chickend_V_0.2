@@ -8,8 +8,6 @@ import android.widget.Button;
 import androidx.appcompat.app.AppCompatActivity;
 import EMA.chickend.R;
 
-
-// TODO : MERGE IT TO THE CODE WHEN THE LEVELS ARE FINISHED
 public class finishGameForm extends AppCompatActivity {
 
     @Override
@@ -23,7 +21,6 @@ public class finishGameForm extends AppCompatActivity {
         exitGameButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // TODO : check if works..
                 System.exit(0);
             }
         });
