@@ -192,16 +192,20 @@ public class PlayLevelActivity extends AppCompatActivity implements ChickenListe
 
         this.m_Level.setNumberOfLives(this.NUMBER_OF_HEARTS - this.m_HeartUsed);
 
-        // Unlock the next level - LOGICALLY && GRAPHICALLY
-        Level nextLevel = Game.getInstance().getLevels().get(this.m_Level.getLevelNumber());
-        nextLevel.setIsLocked(false);
-        nextLevel.generateChickens(this);
+        // Save the current state of game
+        Game.getInstance().saveLevels();
 
         // TODO: check that this works and actually leads to the next level.
         dialog = new AlertDialog.Builder(this);
         dialog.setPositiveButton(R.string.messagebox_continue_playing_text, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
+
+                // Unlock the next level - LOGICALLY && GRAPHICALLY
+                Level nextLevel = Game.getInstance().getLevels().get(PlayLevelActivity.this.m_Level.getLevelNumber());
+                nextLevel.setIsLocked(false);
+                nextLevel.generateChickens(PlayLevelActivity.this);
+
                 m_Level = nextLevel;
                 dialog.cancel();
                 startLevel();

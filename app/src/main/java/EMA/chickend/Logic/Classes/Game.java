@@ -19,6 +19,7 @@ import EMA.chickend.R;
 public class Game implements IGame {
     private static Game _instance;
     private List<Level> levels;
+    // private int numberOfOpenLevels = 0;
 
     private Game()
     {
@@ -132,6 +133,23 @@ public class Game implements IGame {
             return;
         }
     }
+
+    /*
+    public void setNumberOfOpenLevels()
+    {
+        this.numberOfOpenLevels++;
+    }
+
+    public int getNumberOfOpenLevels()
+    {
+        return this.numberOfOpenLevels;
+    }
+
+    public int getThemeOfCurrentLastOpenLevel()
+    {
+        return this.levels.get(this.numberOfOpenLevels - 1).getTheme();
+    }
+    */
 
     public void saveLevels()
     {

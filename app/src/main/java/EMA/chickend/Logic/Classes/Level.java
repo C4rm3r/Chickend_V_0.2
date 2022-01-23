@@ -32,7 +32,7 @@ public class Level implements Serializable {
     public List<Chicken> generateChickens(Context i_Context)
     {
         String[] set = null;
-        Random randomGenerator = new Random();
+        Random randomGenerator = new Random(); //System.currentTimeMillis());
         int currentChickenTypeIndex;
         String currentChickenType;
 
@@ -63,7 +63,7 @@ public class Level implements Serializable {
 
         for (int i = 0; i <  this.chickens.length; i++)
         {
-            currentChickenTypeIndex = randomGenerator.nextInt(set.length);
+            currentChickenTypeIndex = randomGenerator.nextInt(set.length + 1);
 
             if (currentChickenTypeIndex == 0)
             {
@@ -117,6 +117,8 @@ public class Level implements Serializable {
             this.setImageAlpha();
             this.m_VisualComponentOfCurrentLevel.invalidate();
         }
+
+        // Game.getInstance().setNumberOfOpenLevels();
     }
 
     public void setNumberOfLives(int numberOfLives)
