@@ -2,6 +2,8 @@ package EMA.chickend.Logic.Classes;
 
 import android.os.Bundle;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import androidx.appcompat.app.AppCompatActivity;
 import EMA.chickend.R;
@@ -15,6 +17,8 @@ public class finishGameForm extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         Button exitGameButton = findViewById(R.id.exit_game);
+        Animation scale = AnimationUtils.loadAnimation(this, R.anim.scale);
+        exitGameButton.startAnimation(scale);
 
         exitGameButton.setOnClickListener(new View.OnClickListener() {
             @Override
