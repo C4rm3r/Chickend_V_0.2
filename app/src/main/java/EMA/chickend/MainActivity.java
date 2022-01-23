@@ -27,11 +27,9 @@ public class MainActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_main);
 
-        RelativeLayout layout = findViewById(R.id.RelativeLayout_Layout);
-        if (layout != null) {
-            layout.setBackgroundResource(R.drawable.background___ancient_egypt);
-            layout.getBackground().setAlpha(150);
-        }
+       // RelativeLayout layout = findViewById(R.id.RelativeLayout_Layout);
+        //layout.getBackground().setAlpha(160);
+
         ImageView chick = findViewById(R.id.chick_chicken_start);
         ImageView regularChicken = findViewById(R.id.regular_chicken_start);
         ImageView motherChicken = findViewById(R.id.mother_chicken_start);
