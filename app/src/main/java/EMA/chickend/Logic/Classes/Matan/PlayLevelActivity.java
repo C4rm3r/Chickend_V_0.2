@@ -184,26 +184,16 @@ public class PlayLevelActivity extends AppCompatActivity implements ChickenListe
         Toast.makeText(this,"Good job there !", Toast.LENGTH_SHORT).show();
         m_Playing = false;
 
-        // go to screen of levels!. need to fix !!!
-        // !!!!!!!!!
-        /*
-        TODO:
-        1. set "isLocked" of the NEXT level to false
-        2. show dialog message: would you like to proceed to the next level?
-            Yes - go to the next level
-            No  - go to the AllLevelsOverviewForm
-        */
-
         this.m_Level.setNumberOfLives(this.NUMBER_OF_HEARTS - this.m_HeartUsed);
 
-        // Save the current state of game
-        Game.getInstance().saveLevels();
-
-        // TODO: check that this works and actually leads to the next level.
         dialog = new AlertDialog.Builder(this);
         // Unlock the next level - LOGICALLY && GRAPHICALLY
         Level nextLevel = Game.getInstance().getLevels().get(PlayLevelActivity.this.m_Level.getLevelNumber());
         nextLevel.setIsLocked(false);
+
+        // Save the current state of game
+        Game.getInstance().saveLevels(this);
+
         dialog.setPositiveButton(R.string.messagebox_continue_playing_text, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
@@ -229,19 +219,6 @@ public class PlayLevelActivity extends AppCompatActivity implements ChickenListe
 
         dialog.setCancelable(false);
         dialog.show();
-
-        /*
-        Handler handler = new Handler();
-        handler.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                Animation scale = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.scale);
-                m_GoButton.startAnimation(scale);
-                m_GoButton.setVisibility(View.VISIBLE);
-                m_GoButton.setText(String.format("start level", m_Level.getLevelNumber()));
-            }
-        }, 500);
-        */
     }
 
     /**

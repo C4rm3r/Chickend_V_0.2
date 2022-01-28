@@ -105,6 +105,11 @@ public class Level implements Serializable {
         return chickens;
     }
 
+    public int getNumberOfLives()
+    {
+        return this.m_CurrentLogicLevel.getNumberOfLives();
+    }
+
     public boolean isLocked()
     {
         return this.m_CurrentLogicLevel.isLocked();
@@ -179,7 +184,7 @@ public class Level implements Serializable {
         // Dynamically load the suitable id of the current RatingBar
         int currentRatingBarId = AppUtils.getIdValueByIdStringName(String.format("id_of_ratingbar_of_level_%d", this.getLevelNumber()), i_Context);
 
-        /*relative layout*/
+        /* relative layout*/
         this.m_VisualComponentOfCurrentLevel = new RelativeLayout(i_Context);
         this.m_VisualComponentOfCurrentLevel.setId(currentRelativeLayoutId);
 
@@ -192,7 +197,19 @@ public class Level implements Serializable {
         imageBackground.setImageResource(this.getTheme());
         // set the pictures to fit the layout dimensions
         imageBackground.setScaleType(ImageView.ScaleType.FIT_XY);
-        imageBackground.setImageAlpha(100);
+
+        // If the level is open
+        if (this.m_CurrentLogicLevel.isLocked() == false)
+        {
+            imageBackground.setImageAlpha(230);
+        }
+        else
+        {
+            imageBackground.setImageAlpha(100);
+        }
+
+        // imageBackground.setImageAlpha(100);
+        // this.setImageAlpha();
 
         /* rating bar */
         RatingBar ratingBar = new RatingBar(new ContextThemeWrapper(i_Context,R.style.ratingBar),null ,R.style.ratingBar);
@@ -205,10 +222,9 @@ public class Level implements Serializable {
         int dp8 = AppUtils.ConvertPixelsToDPs(i_Context.getResources(), 8);
         ratingBarParams.setMargins(0,dp8,0,0);
         ratingBar.setLayoutParams(ratingBarParams);
-        ratingBar.setNumStars(5);
 
-        // TODO: change this to the real number of stars
-        ratingBar.setRating(5);
+        ratingBar.setNumStars(this.getNumberOfLives());
+        ratingBar.setRating(this.getNumberOfLives());
 
         /*text view level number*/
         TextView textView = new TextView(i_Context);

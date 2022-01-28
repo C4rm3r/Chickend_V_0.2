@@ -35,6 +35,8 @@ public class AllLevelsOverviewForm extends Activity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.all_levels_overview_form);
 
+        Game.getInstance().loadLevels(this);
+
         this.m_RelativeLayout_MainLayout = findViewById(R.id.RelativeLayout_MainLayout);
         this.m_AllLevels = Game.getInstance().getLevels();
 
@@ -130,7 +132,7 @@ public class AllLevelsOverviewForm extends Activity
             currentLine.addView(visualComponentOfTheCurrentLevel);
         }
 
-        Game.getInstance().getLevels().get(0).setImageAlpha();
+        Game.getInstance().getLevels().get(0).setIsLocked(false);
     }
 
     @Override
