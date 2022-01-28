@@ -17,7 +17,7 @@ public class CrazyChicken extends Chicken
 
     public CrazyChicken(Context context)
     {
-        super(context, 150, 2000, 1, R.drawable.crazy_chicken_picture);
+        super(context, 150, 2000, 1, R.drawable.crazy_chicken_picture,R.raw.crazy_chicken_sound);
         eggs = new LinkedList<Egg>();
         eggs.add(new Egg(10,20));
         eggs.add(new Egg(20,10));

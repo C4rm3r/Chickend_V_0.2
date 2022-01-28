@@ -12,7 +12,7 @@ public class MotherChicken extends Chicken
 
     public MotherChicken(Context context)
     {
-        super(context, 150, 6000, 3, R.drawable.mother_chicken_picture);
+        super(context, 150, 6000, 3, R.drawable.mother_chicken_picture,R.raw.mother_chicken_sound);
 
     }
 

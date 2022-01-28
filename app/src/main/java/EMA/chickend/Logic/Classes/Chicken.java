@@ -4,6 +4,7 @@ import android.animation.Animator;
 import android.animation.ValueAnimator;
 import android.content.Context;
 import android.graphics.drawable.Drawable;
+import android.media.MediaPlayer;
 import android.view.MotionEvent;
 import android.view.ViewGroup;
 import android.view.animation.LinearInterpolator;
@@ -29,17 +30,20 @@ public abstract class Chicken extends androidx.appcompat.widget.AppCompatImageVi
     private float  m_Size          = 0.0f;
     private float  m_XPosition     = 0;
     private float  m_YPosition     = 0;
+    private MediaPlayer chicken_sound =  null;
+
 
     public Chicken(Context context) {
         super(context);
     }
 
-    public Chicken(Context context, int rawHeight,int i_Speed,int i_ClicksToDeath, int i_Image) {
+    public Chicken(Context context, int rawHeight,int i_Speed,int i_ClicksToDeath, int i_Image, int sound_id ) {
         super(context);
 
         this.m_Speed         = i_Speed;
         this.m_ClicksToDeath = i_ClicksToDeath;
         this.m_Image         = i_Image;
+        this.chicken_sound = MediaPlayer.create(context,sound_id);
 
         m_Listener = (ChickenListener) context;
 
@@ -75,6 +79,7 @@ public abstract class Chicken extends androidx.appcompat.widget.AppCompatImageVi
         if(event.getAction() == MotionEvent.ACTION_DOWN)
         {
             this.m_ClicksToDeath--;
+            chicken_sound.start();
 
             if (this.m_ClicksToDeath == 0)
             {
