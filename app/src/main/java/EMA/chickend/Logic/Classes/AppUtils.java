@@ -68,6 +68,12 @@ public class AppUtils {
         return (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_PX, pixelsValue, i_Resource.getDisplayMetrics());
     }
 
+    public static int pixelsToDp(int px, Context context) {
+        return (int) TypedValue.applyDimension(
+                TypedValue.COMPLEX_UNIT_DIP, px,
+                context.getResources().getDisplayMetrics());
+    }
+
     public static int ConvertDPsToPixels(Resources resource, int DPsValue)
     {
         return (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, DPsValue,resource.getDisplayMetrics());

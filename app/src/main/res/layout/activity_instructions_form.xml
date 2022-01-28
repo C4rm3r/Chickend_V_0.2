@@ -14,34 +14,35 @@
     android:src="@drawable/android_logo"/>
 
 
-<RelativeLayout
+<LinearLayout
     android:layout_width="wrap_content"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:layout_gravity="center_horizontal"
+    android:gravity="center_horizontal">
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="120dp"
         android:layout_height="120dp"
         android:id="@+id/mother_chicken"
         android:layout_margin="10dp"
         android:orientation="vertical">
 
-
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="20dp"
-            android:text="3 Clicks to kill"
-            android:layout_gravity="center"
+            android:text="@string/clicks_to_kill_3"
+            android:layout_gravity="center_horizontal"
             android:textStyle="bold"/>
 
         <ImageView
             android:layout_width="100dp"
             android:layout_height="100dp"
             android:layout_margin="10dp"
-            android:src="@drawable/mother_chicken_picture"/>
+            android:src="@drawable/mother_chicken_picture" />
 
 
 
-    </LinearLayout>
+    </RelativeLayout>
 
     <LinearLayout
         android:layout_width="120dp"
@@ -54,8 +55,8 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="20dp"
-            android:text="3 clicks to kill"
-            android:layout_gravity="center"
+            android:text="@string/clicks_to_kill_3"
+            android:layout_gravity="center_horizontal"
             android:textStyle="bold"/>
 
 
@@ -79,8 +80,8 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="20dp"
-            android:text="2 clicks to kill"
-            android:layout_gravity="center"
+            android:text="@string/clicks_to_kill_2"
+            android:layout_gravity="center_horizontal"
             android:textStyle="bold"/>
 
 
@@ -95,14 +96,15 @@
     </LinearLayout>
 
 
-</RelativeLayout>
+</LinearLayout>
 
 
-    <RelativeLayout
+    <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
-        android:layout_gravity="center">
+        android:layout_gravity="center_horizontal"
+        android:gravity="center_horizontal">
 
         <LinearLayout
             android:layout_width="120dp"
@@ -114,8 +116,8 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="20dp"
-                android:text="1 click to kill"
-                android:layout_gravity="center"
+                android:text="@string/clicks_to_kill_1"
+                android:layout_gravity="center_horizontal"
                 android:textStyle="bold"/>
 
 
@@ -138,8 +140,8 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="20dp"
-                android:text="1 click to kill"
-                android:layout_gravity="center"
+                android:text="@string/clicks_to_kill_1"
+                android:layout_gravity="center_horizontal"
                 android:textStyle="bold"/>
 
 
@@ -152,8 +154,15 @@
 
         </LinearLayout>
 
-    </RelativeLayout>
+    </LinearLayout>
 
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:layout_gravity="center"
+        android:id="@+id/Button_ReturnToMainMenu"
+        android:text="@string/back_to_main_screen_button_text"/>
 
 </LinearLayout>
 

@@ -1,9 +1,11 @@
-package EMA.chickend.Logic.Classes;
+package EMA.chickend.Logic.Classes.Chickens;
 
 import android.content.Context;
 
 import java.util.List;
 
+import EMA.chickend.Logic.Classes.Chickens.Chick;
+import EMA.chickend.Logic.Classes.Chickens.Chicken;
 import EMA.chickend.R;
 
 public class MotherChicken extends Chicken

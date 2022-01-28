@@ -3,13 +3,10 @@ package EMA.chickend.GUI;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.ContextThemeWrapper;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.RatingBar;
 import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
@@ -17,10 +14,8 @@ import android.widget.Toast;
 
 import java.util.List;
 
-import EMA.chickend.Logic.Classes.AppUtils;
 import EMA.chickend.Logic.Classes.Game;
 import EMA.chickend.Logic.Classes.Level;
-import EMA.chickend.Logic.Classes.Matan.PlayLevelActivity;
 import EMA.chickend.R;
 
 public class AllLevelsOverviewForm extends Activity
@@ -118,7 +113,7 @@ public class AllLevelsOverviewForm extends Activity
                     // If the current level is still locked
                     if (currentLevelWhichShouldBePlayed.isLocked() == true)
                     {
-                        Toast.makeText(AllLevelsOverviewForm.this, "You can't play an unlocked game !", Toast.LENGTH_LONG).show();
+                        Toast.makeText(AllLevelsOverviewForm.this, R.string.locked_level_message, Toast.LENGTH_LONG).show();
                     }
                     else
                     {

@@ -1,4 +1,4 @@
-package EMA.chickend.Logic.Classes;
+package EMA.chickend.Logic.Classes.Chickens;
 
 import android.animation.Animator;
 import android.animation.ValueAnimator;
@@ -11,16 +11,15 @@ import android.view.animation.LinearInterpolator;
 
 import androidx.core.content.ContextCompat;
 
-import EMA.chickend.Logic.Classes.Matan.ChickenListener;
-import EMA.chickend.Logic.Classes.Matan.PixelHelper;
-import EMA.chickend.Logic.Classes.Matan.PlayLevelActivity;
-import EMA.chickend.R;
+import EMA.chickend.Logic.Classes.AppUtils;
+import EMA.chickend.Logic.Interfaces.IBlowable;
 
 public abstract class Chicken extends androidx.appcompat.widget.AppCompatImageView implements Animator.AnimatorListener, ValueAnimator.AnimatorUpdateListener{
 
     private ValueAnimator m_Animator = null;
-    private ChickenListener m_Listener = null;
+    private IBlowable m_Listener = null;
     private boolean m_Killed = false;
+
     // set the speed of the chicken in milliseconds
     private int m_Speed            = 0;
     private int m_ClicksToDeath = 0;
@@ -31,21 +30,23 @@ public abstract class Chicken extends androidx.appcompat.widget.AppCompatImageVi
     private float  m_XPosition     = 0;
     private float  m_YPosition     = 0;
     private MediaPlayer chicken_sound =  null;
+    private int soundId;
 
 
     public Chicken(Context context) {
         super(context);
     }
 
-    public Chicken(Context context, int rawHeight,int i_Speed,int i_ClicksToDeath, int i_Image, int sound_id ) {
+    public Chicken(Context context, int rawHeight,int i_Speed,int i_ClicksToDeath, int i_Image, int i_SoundId ) {
         super(context);
 
         this.m_Speed         = i_Speed;
         this.m_ClicksToDeath = i_ClicksToDeath;
         this.m_Image         = i_Image;
-        this.chicken_sound = MediaPlayer.create(context,sound_id);
+        this.soundId = i_SoundId;
+        this.chicken_sound = MediaPlayer.create(context, this.soundId);
 
-        m_Listener = (ChickenListener) context;
+        m_Listener = (IBlowable) context;
 
         Drawable chicken = ContextCompat.getDrawable(context, i_Image);
 
@@ -53,13 +54,12 @@ public abstract class Chicken extends androidx.appcompat.widget.AppCompatImageVi
 
         int rawWidth = rawHeight / 2;
 
-        int dpHeight = PixelHelper.pixelsToDp(rawHeight, context);
-        int dpWidth = PixelHelper.pixelsToDp(rawWidth, context);
+        int dpHeight = AppUtils.pixelsToDp(rawHeight, context);
+
+        int dpWidth = AppUtils.pixelsToDp(rawWidth, context);
         ViewGroup.LayoutParams params = new ViewGroup.LayoutParams(dpWidth, dpHeight);
         setLayoutParams(params);
     }
-
-
 
     public void chickenAppearances(int screenHeight,int duration) {
         m_Animator = new ValueAnimator();
@@ -69,6 +69,7 @@ public abstract class Chicken extends androidx.appcompat.widget.AppCompatImageVi
         m_Animator.setTarget(this);
         m_Animator.addListener(this);
         m_Animator.addUpdateListener(this);
+
         // start the chicken attack.
         m_Animator.start();
     }
@@ -79,7 +80,17 @@ public abstract class Chicken extends androidx.appcompat.widget.AppCompatImageVi
         if(event.getAction() == MotionEvent.ACTION_DOWN)
         {
             this.m_ClicksToDeath--;
+
             chicken_sound.start();
+
+            try {
+                if (chicken_sound.isPlaying()) {
+                    chicken_sound.stop();
+                    chicken_sound.release();
+                    chicken_sound = MediaPlayer.create(this.getContext(), this.soundId);
+                } chicken_sound.start();
+            } catch(Exception e) { e.printStackTrace(); }
+
 
             if (this.m_ClicksToDeath == 0)
             {
@@ -94,26 +105,6 @@ public abstract class Chicken extends androidx.appcompat.widget.AppCompatImageVi
                     performClick();
                 }
             }
-
-            /*
-            if(m_ClicksToDeath > 0 )
-            {
-                this.m_ClicksToDeath--;
-            }
-            else
-            {
-                if (!this.getKilled())
-                {
-                    this.getListener().killChicken(this, true);
-                    setKilled(true);
-                    this.getAnimator().cancel();
-                }
-                if(event.getAction() == MotionEvent.ACTION_UP)
-                {
-                    performClick();
-                }
-            }
-            */
         }
 
         return super.onTouchEvent(event);
@@ -136,27 +127,11 @@ public abstract class Chicken extends androidx.appcompat.widget.AppCompatImageVi
         return super.performClick();
     }
 
-
-//    public Chicken()
-//    {
-//    }
-//
-//    public Chicken(String i_Name, float i_Speed, float i_Size, int i_ClicksToDeath, String i_Image, int i_XPosition, int i_YPosition)
-//    {
-//        this.m_Name          = i_Name;
-//        this.m_Speed         = i_Speed;
-//        this.m_Size          = i_Size;
-//        this.m_ClicksToDeath = i_ClicksToDeath;
-//        this.m_Image         = i_Image;
-//        this.m_XPosition     = i_XPosition;
-//        this.m_YPosition     = i_YPosition;
-//    }
-
-    public ChickenListener getListener() {
+    public IBlowable getListener() {
         return m_Listener;
     }
 
-    public void setListener(ChickenListener m_Listener) {
+    public void setListener(IBlowable m_Listener) {
         this.m_Listener = m_Listener;
     }
 

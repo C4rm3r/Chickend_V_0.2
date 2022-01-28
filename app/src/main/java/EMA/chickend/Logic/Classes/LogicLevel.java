@@ -1,17 +1,6 @@
 package EMA.chickend.Logic.Classes;
 
-import android.content.Context;
-
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
-
-import EMA.chickend.GUI.AllLevelsOverviewForm;
-import EMA.chickend.Logic.Classes.Matan.PlayLevelActivity;
-import EMA.chickend.Logic.Interfaces.ILevel;
-import EMA.chickend.MainActivity;
-import EMA.chickend.R;
 
 /**
  * The level class represents a stage in the game

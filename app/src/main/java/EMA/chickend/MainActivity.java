@@ -53,10 +53,10 @@ public class MainActivity extends AppCompatActivity {
         });
 
         Button instructionButton = findViewById(R.id.instruction_btn);
-        startButton.startAnimation(scale);
+        instructionButton.startAnimation(scale);
 
-        startButton.setAlpha(1);
-        startButton.setOnClickListener(new View.OnClickListener() {
+        instructionButton.setAlpha(1);
+        instructionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(MainActivity.this, InstructionsForm.class));

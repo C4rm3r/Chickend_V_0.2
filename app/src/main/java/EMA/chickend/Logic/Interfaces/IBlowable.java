@@ -1,12 +1,8 @@
 package EMA.chickend.Logic.Interfaces;
 
-/**
- * The IBlowable interface represents the objects that can blow.
- */
+import EMA.chickend.Logic.Classes.Chickens.Chicken;
+
+// Need to replace with IBlowble !
 public interface IBlowable {
-    /**
-     * void blow()
-     *     Purpose: Gives the option to blow up the object.
-     */
-    void blow();
+    void killChicken(Chicken chicken, boolean userTouch);
 }

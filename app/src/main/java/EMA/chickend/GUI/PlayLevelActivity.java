@@ -1,15 +1,12 @@
-package EMA.chickend.Logic.Classes.Matan;
+package EMA.chickend.GUI;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.drawable.Drawable;
-import android.media.Rating;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
@@ -20,7 +17,6 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.RatingBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -30,17 +26,15 @@ import java.util.Date;
 import java.util.List;
 import java.util.Random;
 
-import EMA.chickend.GUI.AllLevelsOverviewForm;
+import EMA.chickend.FinishGameActivity;
 import EMA.chickend.Logic.Classes.AppUtils;
-import EMA.chickend.Logic.Classes.Chicken;
+import EMA.chickend.Logic.Classes.Chickens.Chicken;
+import EMA.chickend.Logic.Interfaces.IBlowable;
 import EMA.chickend.Logic.Classes.Game;
 import EMA.chickend.Logic.Classes.Level;
-import EMA.chickend.Logic.Classes.finishGameForm;
-import EMA.chickend.MainActivity;
 import EMA.chickend.R;
 
-
-public class PlayLevelActivity extends AppCompatActivity implements ChickenListener {
+public class PlayLevelActivity extends AppCompatActivity implements IBlowable {
     private static final int MIN_ANIMATION_DELAY = 500;
     private static final int MAX_ANIMATION_DELAY = 1500;
     private static final int NUMBER_OF_HEARTS = 5;
@@ -117,7 +111,6 @@ public class PlayLevelActivity extends AppCompatActivity implements ChickenListe
         }
         catch (Exception exception)
         {
-            Toast.makeText(this, exception.toString(), Toast.LENGTH_LONG).show();
         }
     }
 
@@ -136,7 +129,8 @@ public class PlayLevelActivity extends AppCompatActivity implements ChickenListe
         startLevel();
     }
 
-    private void setToFullScreen() {
+    private void setToFullScreen()
+    {
         this.m_ContentView.setSystemUiVisibility(View.SYSTEM_UI_FLAG_LOW_PROFILE
                 | View.SYSTEM_UI_FLAG_FULLSCREEN
                 | View.SYSTEM_UI_FLAG_LAYOUT_STABLE
@@ -179,14 +173,23 @@ public class PlayLevelActivity extends AppCompatActivity implements ChickenListe
     }
 
     // finish/start lvl pause
-    private void finishLevel() {
-
-        Toast.makeText(this,"Good job there !", Toast.LENGTH_SHORT).show();
+    private void finishLevel()
+    {
+        Toast.makeText(this, R.string.success_toast_message, Toast.LENGTH_SHORT).show();
         m_Playing = false;
 
         this.m_Level.setNumberOfLives(this.NUMBER_OF_HEARTS - this.m_HeartUsed);
 
+        // Go to finish levels screen.
+        if (m_Level.getLevelNumber() == 3)// NUMBER_OF_LEVELS)
+        {
+            Intent intent = new Intent(PlayLevelActivity.this, FinishGameActivity.class);
+            startActivity(intent);
+            finish();
+        }
+
         dialog = new AlertDialog.Builder(this);
+
         // Unlock the next level - LOGICALLY && GRAPHICALLY
         Level nextLevel = Game.getInstance().getLevels().get(PlayLevelActivity.this.m_Level.getLevelNumber());
         nextLevel.setIsLocked(false);
@@ -194,9 +197,11 @@ public class PlayLevelActivity extends AppCompatActivity implements ChickenListe
         // Save the current state of game
         Game.getInstance().saveLevels(this);
 
-        dialog.setPositiveButton(R.string.messagebox_continue_playing_text, new DialogInterface.OnClickListener() {
+        dialog.setPositiveButton(R.string.messagebox_continue_playing_text, new DialogInterface.OnClickListener()
+        {
             @Override
-            public void onClick(DialogInterface dialog, int which) {
+            public void onClick(DialogInterface dialog, int which)
+            {
                 nextLevel.generateChickens(PlayLevelActivity.this);
 
                 m_Level = nextLevel;
@@ -205,17 +210,13 @@ public class PlayLevelActivity extends AppCompatActivity implements ChickenListe
             }
         });
 
-        dialog.setNegativeButton(R.string.messagebox_stop_playing_text, new DialogInterface.OnClickListener() {
+        dialog.setNegativeButton(R.string.messagebox_stop_playing_text, new DialogInterface.OnClickListener()
+        {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 finish();
             }
         });
-
-        // Go to finish levels screen.
-        if(m_Level.getLevelNumber() == NUMBER_OF_LEVELS) {
-            startActivity(new Intent(this, finishGameForm.class));
-        }
 
         dialog.setCancelable(false);
         dialog.show();
@@ -251,10 +252,6 @@ public class PlayLevelActivity extends AppCompatActivity implements ChickenListe
                 gameOver();
                 return;
             }
-            else {
-                // let the user know that heart was down.
-                // Toast.makeText(this, "heart down", Toast.LENGTH_SHORT).show();
-            }
         }
 
         // if all the chicken was killed finish the level.
@@ -264,9 +261,8 @@ public class PlayLevelActivity extends AppCompatActivity implements ChickenListe
     }
 
     // If the user failed to pass the level.
-    private void gameOver() {
-
-        // TODO: @matan should change the MatanChicken class according to our class diagram
+    private void gameOver()
+    {
         // removing all the chicken from the screen.
         for (Chicken chicken : m_Chickens) {
             m_ContentView.removeView(chicken);
@@ -277,12 +273,10 @@ public class PlayLevelActivity extends AppCompatActivity implements ChickenListe
         m_Chickens.clear();
         m_Playing = false;
 
-        // TODO: set the value of
-
         // the game is over !
         // move to dialog ? / press the button to start from the beginning.
 
-        Toast.makeText(this,"Ohhh shit !", Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, R.string.failed_toast_message, Toast.LENGTH_SHORT).show();
         m_Playing = false;
         Handler handler = new Handler();
         handler.postDelayed(new Runnable() {

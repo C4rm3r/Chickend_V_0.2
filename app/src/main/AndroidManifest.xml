@@ -27,7 +27,11 @@
             android:name=".GUI.AllLevelsOverviewForm"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".Logic.Classes.Matan.PlayLevelActivity"
+            android:name=".GUI.PlayLevelActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".FinishGameActivity"
             android:screenOrientation="portrait" />
     </application>
 

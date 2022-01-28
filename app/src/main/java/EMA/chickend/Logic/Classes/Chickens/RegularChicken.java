@@ -1,7 +1,8 @@
-package EMA.chickend.Logic.Classes;
+package EMA.chickend.Logic.Classes.Chickens;
 
 import android.content.Context;
 
+import EMA.chickend.Logic.Classes.Chickens.Chicken;
 import EMA.chickend.R;
 
 public class RegularChicken extends Chicken {

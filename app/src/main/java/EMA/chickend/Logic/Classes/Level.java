@@ -7,15 +7,18 @@ import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.io.Serializable;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;
 
-import EMA.chickend.GUI.AllLevelsOverviewForm;
+import EMA.chickend.Logic.Classes.Chickens.Chick;
+import EMA.chickend.Logic.Classes.Chickens.Chicken;
+import EMA.chickend.Logic.Classes.Chickens.CovidChicken;
+import EMA.chickend.Logic.Classes.Chickens.CrazyChicken;
+import EMA.chickend.Logic.Classes.Chickens.MotherChicken;
+import EMA.chickend.Logic.Classes.Chickens.RegularChicken;
 import EMA.chickend.R;
 
 public class Level implements Serializable {
@@ -32,7 +35,7 @@ public class Level implements Serializable {
     public List<Chicken> generateChickens(Context i_Context)
     {
         String[] set = null;
-        Random randomGenerator = new Random(); //System.currentTimeMillis());
+        Random randomGenerator = new Random();
         int currentChickenTypeIndex;
         String currentChickenType;
 
@@ -57,9 +60,7 @@ public class Level implements Serializable {
             set = new String[]{"Chick", "RegularChicken", "MotherChicken", "CrazyChicken", "CovidChicken"};
         }
 
-        Toast.makeText(i_Context, Arrays.toString(set), Toast.LENGTH_LONG).show();
-
-        this.chickens = new Chicken[5]; //ThreadLocalRandom.current().nextInt(30, 41)];
+        this.chickens = new Chicken[ThreadLocalRandom.current().nextInt(30, 41)];
 
         for (int i = 0; i <  this.chickens.length; i++)
         {

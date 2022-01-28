@@ -1,4 +1,4 @@
-package EMA.chickend.Logic.Classes;
+package EMA.chickend.Logic.Classes.Chickens;
 
 import android.content.Context;
 

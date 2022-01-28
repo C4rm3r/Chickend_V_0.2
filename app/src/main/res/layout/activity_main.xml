@@ -9,7 +9,7 @@
         android:id="@+id/start_btn"
         android:layout_width="200dp"
         android:layout_height="wrap_content"
-        android:text="@string/start_app"
+        android:text="@string/start_game_button_text"
         android:textSize="20dp"
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
@@ -19,13 +19,14 @@
         android:id="@+id/instruction_btn"
         android:layout_width="200dp"
         android:layout_height="wrap_content"
-        android:text="instrucation"
         android:layout_below="@+id/start_btn"
-        android:textSize="20dp"
-        android:layout_margin="15dp"
-        android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true"
-        />
+        android:layout_centerInParent="true"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginEnd="15dp"
+        android:layout_marginBottom="15dp"
+        android:text="@string/game_instructions_button_text"
+        android:textSize="20dp" />
 
     <ImageView
         android:id="@+id/mother_chicken_start"

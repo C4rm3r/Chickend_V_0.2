@@ -1,10 +1,8 @@
-package EMA.chickend.Logic.Classes;
+package EMA.chickend.Logic.Classes.Chickens;
 
 import android.content.Context;
 
-import java.util.LinkedList;
-import java.util.List;
-
+import EMA.chickend.Logic.Classes.Chickens.Chicken;
 import EMA.chickend.R;
 
 /**
@@ -13,23 +11,8 @@ import EMA.chickend.R;
  */
 public class CrazyChicken extends Chicken
 {
-    private List<Egg> eggs;
-
     public CrazyChicken(Context context)
     {
         super(context, 150, 2000, 1, R.drawable.crazy_chicken_picture,R.raw.crazy_chicken_sound);
-        eggs = new LinkedList<Egg>();
-        eggs.add(new Egg(10,20));
-        eggs.add(new Egg(20,10));
     }
-
-    public List<Egg> getEggs() {
-        return eggs;
-    }
-
-    public void setEggs(List<Egg> eggs) {
-        this.eggs = eggs;
-    }
-
-
 }

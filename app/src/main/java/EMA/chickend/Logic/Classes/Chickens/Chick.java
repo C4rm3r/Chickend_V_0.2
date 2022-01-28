@@ -1,7 +1,6 @@
-package EMA.chickend.Logic.Classes;
+package EMA.chickend.Logic.Classes.Chickens;
 
 import android.content.Context;
-import android.view.MotionEvent;
 
 import EMA.chickend.R;
 
