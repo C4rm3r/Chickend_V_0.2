@@ -52,11 +52,13 @@ public abstract class Chicken extends androidx.appcompat.widget.AppCompatImageVi
 
         this.setImageDrawable(chicken);
 
+        rawHeight *= 3;
+
         int rawWidth = rawHeight / 2;
 
-        int dpHeight = AppUtils.pixelsToDp(rawHeight, context);
+        int dpHeight = AppUtils.ConvertPixelsToDPs(context.getResources(), rawHeight);
 
-        int dpWidth = AppUtils.pixelsToDp(rawWidth, context);
+        int dpWidth = AppUtils.ConvertPixelsToDPs(context.getResources(), rawWidth);
         ViewGroup.LayoutParams params = new ViewGroup.LayoutParams(dpWidth, dpHeight);
         setLayoutParams(params);
     }
