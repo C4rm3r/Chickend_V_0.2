@@ -40,7 +40,7 @@ public class MainActivity extends AppCompatActivity {
         chick.getBackground().setAlpha(230);
         regularChicken.getBackground().setAlpha(230);
 
-        Button startButton = findViewById(R.id.mybutton);
+        Button startButton = findViewById(R.id.start_btn);
         Animation scale = AnimationUtils.loadAnimation(this, R.anim.scale);
         startButton.startAnimation(scale);
 
@@ -49,6 +49,17 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(MainActivity.this, AllLevelsOverviewForm.class));
+            }
+        });
+
+        Button instructionButton = findViewById(R.id.instruction_btn);
+        startButton.startAnimation(scale);
+
+        startButton.setAlpha(1);
+        startButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(MainActivity.this, InstructionsForm.class));
             }
         });
     }

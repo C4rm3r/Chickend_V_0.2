@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".InstructionsForm">
+
+<ImageView
+    android:layout_width="wrap_content"
+    android:layout_height="300dp"
+    android:id="@+id/image_logo"
+    android:src="@drawable/android_logo"/>
+
+
+<RelativeLayout
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
+
+    <LinearLayout
+        android:layout_width="120dp"
+        android:layout_height="120dp"
+        android:id="@+id/mother_chicken"
+        android:layout_margin="10dp"
+        android:orientation="vertical">
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="20dp"
+            android:text="3 Clicks to kill"
+            android:layout_gravity="center"
+            android:textStyle="bold"/>
+
+        <ImageView
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_margin="10dp"
+            android:src="@drawable/mother_chicken_picture"/>
+
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="120dp"
+        android:layout_height="120dp"
+        android:id="@+id/covid_chicken"
+        android:layout_margin="10dp"
+        android:layout_toEndOf="@+id/regular_chicken"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="20dp"
+            android:text="3 clicks to kill"
+            android:layout_gravity="center"
+            android:textStyle="bold"/>
+
+
+        <ImageView
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_margin="10dp"
+            android:src="@drawable/covid_chicken_picture"/>
+
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="120dp"
+        android:layout_height="120dp"
+        android:id="@+id/regular_chicken"
+        android:layout_margin="10dp"
+        android:layout_toEndOf="@+id/mother_chicken"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="20dp"
+            android:text="2 clicks to kill"
+            android:layout_gravity="center"
+            android:textStyle="bold"/>
+
+
+        <ImageView
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_margin="10dp"
+            android:src="@drawable/regular_chicken_picture"/>
+
+
+
+    </LinearLayout>
+
+
+</RelativeLayout>
+
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:layout_gravity="center">
+
+        <LinearLayout
+            android:layout_width="120dp"
+            android:layout_height="120dp"
+            android:id="@+id/crazy_chicken"
+            android:layout_margin="10dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="20dp"
+                android:text="1 click to kill"
+                android:layout_gravity="center"
+                android:textStyle="bold"/>
+
+
+            <ImageView
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_margin="10dp"
+                android:src="@drawable/crazy_chicken_picture"/>
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="120dp"
+            android:layout_height="120dp"
+            android:layout_margin="10dp"
+            android:layout_toEndOf="@+id/crazy_chicken"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="20dp"
+                android:text="1 click to kill"
+                android:layout_gravity="center"
+                android:textStyle="bold"/>
+
+
+            <ImageView
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_margin="10dp"
+                android:src="@drawable/chick_picture"/>
+
+
+        </LinearLayout>
+
+    </RelativeLayout>
+
+
+</LinearLayout>
+
+
