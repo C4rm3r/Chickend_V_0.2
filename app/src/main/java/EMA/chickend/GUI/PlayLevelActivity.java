@@ -21,6 +21,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.sql.Time;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -29,6 +30,7 @@ import java.util.Random;
 import EMA.chickend.FinishGameActivity;
 import EMA.chickend.Logic.Classes.AppUtils;
 import EMA.chickend.Logic.Classes.Chickens.Chicken;
+import EMA.chickend.Logic.Classes.Chickens.ChickensSounds;
 import EMA.chickend.Logic.Interfaces.IBlowable;
 import EMA.chickend.Logic.Classes.Game;
 import EMA.chickend.Logic.Classes.Level;
@@ -175,6 +177,7 @@ public class PlayLevelActivity extends AppCompatActivity implements IBlowable {
     // finish/start lvl pause
     private void finishLevel()
     {
+
         Toast.makeText(this, R.string.success_toast_message, Toast.LENGTH_SHORT).show();
         m_Playing = false;
 
@@ -207,6 +210,7 @@ public class PlayLevelActivity extends AppCompatActivity implements IBlowable {
                 m_Level = nextLevel;
                 dialog.cancel();
                 startLevel();
+                ChickensSounds.getInstance().getChickenSounds().autoPause();
             }
         });
 
@@ -216,10 +220,14 @@ public class PlayLevelActivity extends AppCompatActivity implements IBlowable {
             public void onClick(DialogInterface dialog, int which) {
                 finish();
             }
+
         });
 
         dialog.setCancelable(false);
         dialog.show();
+        ChickensSounds.getInstance().getChickenSounds().autoPause();
+
+
     }
 
     /**

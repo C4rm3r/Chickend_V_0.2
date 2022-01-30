@@ -12,7 +12,7 @@ public class Chick extends Chicken
 {
     public Chick(Context context)
     {
-        super(context, 150, 7000, 1, R.drawable.chick_picture,R.raw.chick_sound);
+        super(context, 150, 7000, 1, R.drawable.chick_picture,1);
     }
 
 }

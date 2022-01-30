@@ -13,6 +13,6 @@ public class CrazyChicken extends Chicken
 {
     public CrazyChicken(Context context)
     {
-        super(context, 150, 2000, 1, R.drawable.crazy_chicken_picture,R.raw.crazy_chicken_sound);
+        super(context, 150, 2000, 1, R.drawable.crazy_chicken_picture,5);
     }
 }

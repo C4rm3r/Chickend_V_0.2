@@ -4,7 +4,11 @@ import android.animation.Animator;
 import android.animation.ValueAnimator;
 import android.content.Context;
 import android.graphics.drawable.Drawable;
+import android.media.AudioAttributes;
+import android.media.AudioManager;
 import android.media.MediaPlayer;
+import android.media.SoundPool;
+import android.os.Build;
 import android.view.MotionEvent;
 import android.view.ViewGroup;
 import android.view.animation.LinearInterpolator;
@@ -29,8 +33,9 @@ public abstract class Chicken extends androidx.appcompat.widget.AppCompatImageVi
     private float  m_Size          = 0.0f;
     private float  m_XPosition     = 0;
     private float  m_YPosition     = 0;
-    private MediaPlayer chicken_sound =  null;
+    //private MediaPlayer chicken_sound =  null;
     private int soundId;
+    private ChickensSounds chickenSound = ChickensSounds.getInstance();
 
 
     public Chicken(Context context) {
@@ -44,7 +49,6 @@ public abstract class Chicken extends androidx.appcompat.widget.AppCompatImageVi
         this.m_ClicksToDeath = i_ClicksToDeath;
         this.m_Image         = i_Image;
         this.soundId = i_SoundId;
-        this.chicken_sound = MediaPlayer.create(context, this.soundId);
 
         m_Listener = (IBlowable) context;
 
@@ -82,16 +86,17 @@ public abstract class Chicken extends androidx.appcompat.widget.AppCompatImageVi
         if(event.getAction() == MotionEvent.ACTION_DOWN)
         {
             this.m_ClicksToDeath--;
-
-            chicken_sound.start();
-
-            try {
-                if (chicken_sound.isPlaying()) {
-                    chicken_sound.stop();
-                    chicken_sound.release();
-                    chicken_sound = MediaPlayer.create(this.getContext(), this.soundId);
-                } chicken_sound.start();
-            } catch(Exception e) { e.printStackTrace(); }
+            chickenSound.playSound(soundId);
+//            chicken_sound.start();
+//
+//            try {
+//                if (chicken_sound.isPlaying()) {
+//                    chicken_sound.stop();
+//                    chicken_sound.release();
+//                    chicken_sound = null;
+//                    chicken_sound = MediaPlayer.create(this.getContext(), this.soundId);
+//                } chicken_sound.start();
+//            } catch(Exception e) { e.printStackTrace(); }
 
 
             if (this.m_ClicksToDeath == 0)
