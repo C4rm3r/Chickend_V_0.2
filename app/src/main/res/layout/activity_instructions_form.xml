@@ -5,7 +5,9 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".InstructionsForm">
+    tools:context=".InstructionsForm"
+    android:background="@drawable/background_color_gradient2"
+    >
 
 <ImageView
     android:layout_width="wrap_content"
@@ -26,19 +28,19 @@
         android:id="@+id/mother_chicken"
         android:layout_margin="10dp"
         android:orientation="vertical">
+
         <LinearLayout
             android:layout_width="120dp"
             android:layout_height="120dp"
             android:orientation="vertical"
-
+            android:layout_gravity="center"
             >
 
             <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="20dp"
-                android:gravity="center"
+                style="@style/chick_intruction_text"
                 android:text="@string/clicks_to_kill_3"
-                android:textStyle="bold" />
+
+                />
 
             <ImageView
                 android:layout_width="100dp"
@@ -51,10 +53,6 @@
 
         </LinearLayout>
 
-
-
-
-
     </RelativeLayout>
 
     <LinearLayout
@@ -63,14 +61,14 @@
         android:id="@+id/covid_chicken"
         android:layout_margin="10dp"
         android:layout_toEndOf="@+id/regular_chicken"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:layout_gravity="center"
+        >
 
         <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="20dp"
+            style="@style/chick_intruction_text"
             android:text="@string/clicks_to_kill_3"
-            android:gravity="center"
-            android:textStyle="bold"/>
+            />
 
 
         <ImageView
@@ -89,14 +87,13 @@
         android:layout_margin="10dp"
         android:layout_toEndOf="@+id/mother_chicken"
         android:orientation="vertical"
+        android:layout_gravity="center"
         >
 
         <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="20dp"
+            style="@style/chick_intruction_text"
             android:text="@string/clicks_to_kill_2"
-            android:gravity="center"
-            android:textStyle="bold"/>
+            />
 
 
         <ImageView
@@ -125,14 +122,14 @@
             android:layout_height="120dp"
             android:id="@+id/crazy_chicken"
             android:layout_margin="10dp"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:layout_gravity="center"
+            >
 
             <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="20dp"
+                style="@style/chick_intruction_text"
                 android:text="@string/clicks_to_kill_1"
-                android:gravity="center"
-                android:textStyle="bold"/>
+                />
 
 
             <ImageView
@@ -149,14 +146,14 @@
             android:layout_height="120dp"
             android:layout_margin="10dp"
             android:layout_toEndOf="@+id/crazy_chicken"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:layout_gravity="center"
+            >
 
             <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="20dp"
+                style="@style/chick_intruction_text"
                 android:text="@string/clicks_to_kill_1"
-                android:gravity="center"
-                android:textStyle="bold"/>
+                />
 
 
             <ImageView
