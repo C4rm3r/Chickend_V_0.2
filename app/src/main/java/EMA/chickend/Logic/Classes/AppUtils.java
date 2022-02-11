@@ -39,7 +39,7 @@ public class AppUtils {
         return chosenColor;
     }
 
-    public static String GetResourceStringByStringName(String i_StringName, Context i_Context)
+    public static String getResourceStringByStringName(String i_StringName, Context i_Context)
     {
         Resources res = i_Context.getResources();
         String packageName = i_Context.getPackageName();

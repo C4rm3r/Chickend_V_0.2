@@ -21,7 +21,6 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.sql.Time;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -43,16 +42,15 @@ public class PlayLevelActivity extends AppCompatActivity implements IBlowable {
     private static final int NUMBER_OF_LEVELS = 20;
     private static int m_ChickenPerLevel = 20;
     private int m_ScreenWidth, m_ScreenHeight, m_ChickensKilled, m_HeartUsed;
-    // need to get the level in the ctor to know how many chickens to Launch
     private Level m_Level;
     private boolean m_Playing;
     private List<ImageView> m_HeartImages = new ArrayList<>();
-    // private List<MatanChicken> m_Chickens = new ArrayList<>();
     private List<Chicken> m_Chickens = new ArrayList<>();
     private Button m_GoButton;
     private ViewGroup m_ContentView;
     private int chickensLaunched = 0;
     private AlertDialog.Builder dialog = null;
+    private ChickenLauncher launcher = new ChickenLauncher();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -100,12 +98,11 @@ public class PlayLevelActivity extends AppCompatActivity implements IBlowable {
             m_GoButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-
-                    // starting the level again
-                    if (m_HeartUsed == 5) {
-                        startLevelAgain();
-                    } else {
-                        // start the level
+                    if (((Button)v).getText().equals(AppUtils.getResourceStringByStringName("return_to_levels_activity_button_text", PlayLevelActivity.this)))
+                    {
+                        finish();
+                    }
+                    else {
                         startLevel();
                     }
                 }
@@ -150,7 +147,7 @@ public class PlayLevelActivity extends AppCompatActivity implements IBlowable {
     private void startLevel()
     {
         TextView levelTextView = (TextView)findViewById(R.id.TextView_LevelNumber);
-        levelTextView.setText(AppUtils.GetResourceStringByStringName("textview_level_number_text", this) + this.m_Level.getLevelNumber() + "");
+        levelTextView.setText(AppUtils.getResourceStringByStringName("textview_level_number_text", this) + this.m_Level.getLevelNumber() + "");
 
         RelativeLayout layout = (RelativeLayout)findViewById(R.id.PlayLevelActivity);
         layout.setBackgroundResource(this.m_Level.getTheme());
@@ -159,8 +156,7 @@ public class PlayLevelActivity extends AppCompatActivity implements IBlowable {
         this.resetHearts();
         chickensLaunched = 0;
 
-        // launch the chicken async
-        ChickenLauncher launcher = new ChickenLauncher();
+        launcher = new ChickenLauncher();
         launcher.execute(this.m_Level.getLevelNumber());
 
         m_Playing = true;
@@ -177,14 +173,13 @@ public class PlayLevelActivity extends AppCompatActivity implements IBlowable {
     // finish/start lvl pause
     private void finishLevel()
     {
-
         Toast.makeText(this, R.string.success_toast_message, Toast.LENGTH_SHORT).show();
         m_Playing = false;
 
         this.m_Level.setNumberOfLives(this.NUMBER_OF_HEARTS - this.m_HeartUsed);
 
         // Go to finish levels screen.
-        if (m_Level.getLevelNumber() == 3)// NUMBER_OF_LEVELS)
+        if (m_Level.getLevelNumber() == NUMBER_OF_LEVELS)
         {
             Intent intent = new Intent(PlayLevelActivity.this, FinishGameActivity.class);
             startActivity(intent);
@@ -226,8 +221,6 @@ public class PlayLevelActivity extends AppCompatActivity implements IBlowable {
         dialog.setCancelable(false);
         dialog.show();
         ChickensSounds.getInstance().getChickenSounds().autoPause();
-
-
     }
 
     /**
@@ -281,9 +274,6 @@ public class PlayLevelActivity extends AppCompatActivity implements IBlowable {
         m_Chickens.clear();
         m_Playing = false;
 
-        // the game is over !
-        // move to dialog ? / press the button to start from the beginning.
-
         Toast.makeText(this, R.string.failed_toast_message, Toast.LENGTH_SHORT).show();
         m_Playing = false;
         Handler handler = new Handler();
@@ -293,7 +283,8 @@ public class PlayLevelActivity extends AppCompatActivity implements IBlowable {
                 Animation scale = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.scale);
                 m_GoButton.startAnimation(scale);
                 m_GoButton.setVisibility(View.VISIBLE);
-                m_GoButton.setText(R.string.restart_game_button_text);
+                // m_GoButton.setText(R.string.return_to_levels_activity_button_text);
+                m_GoButton.setText(R.string.return_to_levels_activity_button_text);
             }
         }, 500);
     }
@@ -313,7 +304,6 @@ public class PlayLevelActivity extends AppCompatActivity implements IBlowable {
 
             m_ChickenPerLevel = m_Level.getChickens().length;
 
-            // TODO: change name to something more informative
             int maxDelay = Math.max(MIN_ANIMATION_DELAY,
                     (MAX_ANIMATION_DELAY - ((level - 1) * 500)));
             int minDelay = maxDelay / 2;
@@ -323,6 +313,7 @@ public class PlayLevelActivity extends AppCompatActivity implements IBlowable {
 
                 //Get a random horizontal position for the next balloon
                 Random random = new Random(new Date().getTime());
+
                 // check if hebrew or English and set the x position according to your language
                 SharedPreferences prefs = getSharedPreferences("Settings", Activity.MODE_PRIVATE);
                 String language = prefs.getString("My_Lang", "");
@@ -364,23 +355,9 @@ public class PlayLevelActivity extends AppCompatActivity implements IBlowable {
         }
     }
 
-    // TODO: as being said above, this function should launch the new given chicken and not just new ordinary chicken...
     // add the chicken to the list and screen and then start attack.
-    private void launchChickenAttack(int x, Chicken currentChickenToLaunch) {
-        /*
-        MatanChicken chicken = new MatanChicken(this, 150);
-        // add the chicken to the array of chickens.
-        m_Chickens.add(chicken);
-
-        // Set chicken vertical position and dimensions and adding to the view.
-        chicken.setX(x);
-        chicken.setY(m_ScreenHeight + chicken.getHeight());
-        // add the chicken to the screen
-        m_ContentView.addView(chicken);
-        // set the speed down of the chicken.
-        chicken.chickenAppearances(m_ScreenHeight, chicken.getSpeed());
-        */
-
+    private void launchChickenAttack(int x, Chicken currentChickenToLaunch)
+    {
         // add the chicken to the array of chickens.
         m_Chickens.add(currentChickenToLaunch);
 
