@@ -34,7 +34,7 @@ public class AllLevelsOverviewForm extends Activity
         Game.getInstance().loadLevels(this);
 
         this.m_RelativeLayout_MainLayout = findViewById(R.id.RelativeLayout_MainLayout);
-        m_RelativeLayout_MainLayout.setBackgroundResource(R.drawable.background_color_gradient2);
+        m_RelativeLayout_MainLayout.setBackgroundResource(R.color.black);
         this.m_AllLevels = Game.getInstance().getLevels();
 
         ScrollView ScrollView_Layout = findViewById(R.id.ScrollView_Layout);
