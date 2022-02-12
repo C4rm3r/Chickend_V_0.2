@@ -24,18 +24,11 @@ import EMA.chickend.R;
 public class Game implements IGame {
     private static Game _instance;
     private List<Level> levels;
-    // private int numberOfOpenLevels = 0;
 
     private Game()
     {
         this.levels = new ArrayList<>();
     }
-
-    /*
-    public Game(List<Level> levels) {
-        this.levels = levels;
-    }
-    */
 
     public static Game getInstance()
     {

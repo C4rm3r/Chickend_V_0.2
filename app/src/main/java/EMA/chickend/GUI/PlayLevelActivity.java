@@ -283,7 +283,6 @@ public class PlayLevelActivity extends AppCompatActivity implements IBlowable {
                 Animation scale = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.scale);
                 m_GoButton.startAnimation(scale);
                 m_GoButton.setVisibility(View.VISIBLE);
-                // m_GoButton.setText(R.string.return_to_levels_activity_button_text);
                 m_GoButton.setText(R.string.return_to_levels_activity_button_text);
             }
         }, 500);

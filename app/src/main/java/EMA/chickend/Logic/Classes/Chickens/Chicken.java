@@ -33,7 +33,6 @@ public abstract class Chicken extends androidx.appcompat.widget.AppCompatImageVi
     private float  m_Size          = 0.0f;
     private float  m_XPosition     = 0;
     private float  m_YPosition     = 0;
-    //private MediaPlayer chicken_sound =  null;
     private int soundId;
     private ChickensSounds chickenSound = ChickensSounds.getInstance();
 
@@ -87,16 +86,6 @@ public abstract class Chicken extends androidx.appcompat.widget.AppCompatImageVi
         {
             this.m_ClicksToDeath--;
             chickenSound.playSound(soundId);
-//            chicken_sound.start();
-//
-//            try {
-//                if (chicken_sound.isPlaying()) {
-//                    chicken_sound.stop();
-//                    chicken_sound.release();
-//                    chicken_sound = null;
-//                    chicken_sound = MediaPlayer.create(this.getContext(), this.soundId);
-//                } chicken_sound.start();
-//            } catch(Exception e) { e.printStackTrace(); }
 
 
             if (this.m_ClicksToDeath == 0)
@@ -246,9 +235,4 @@ public abstract class Chicken extends androidx.appcompat.widget.AppCompatImageVi
 
     }
 
-    /*
-    public void setContext(Context i_Context)
-    {
-    }
-    */
 }
